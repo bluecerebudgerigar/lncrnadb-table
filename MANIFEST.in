@@ -2,4 +2,3 @@ include README.md
 recursive-include lncrnadb_table/locale *
 recursive-include lncrnadb_table/templates *
 recursive-include lncrnadb_table/static *
-recursive-exclude * *.pyc
