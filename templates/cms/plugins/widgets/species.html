@@ -1,0 +1,105 @@
+
+
+<div id="table"></div>
+<script type="text/javascript">
+//<![CDATA]
+var lol;
+	(function($) {
+	
+	$(document).ready(function () {
+		{% if data %}var data = {{ data|safe }};{% endif %}
+	   	var headerRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+	  		Handsontable.TextCell.renderer.apply(this, arguments);
+	  		$(td).css({
+	    		'background':'#ccc',
+	    		'font-weight':'bold',
+				'min-width':'30em'
+				
+	  		});
+		};
+		
+		var normalRenderer = function (instance, td, row, col, prop, value, cellProperties) {
+	  		Handsontable.TextCell.renderer.apply(this, arguments);
+			console.log(value)
+			
+	  		$(td).css({
+	    		'background':'white',
+	    		'font-weight':'normal',
+				'min-width':'30em'
+				
+	  		});
+			 lol = td
+			return td;
+			
+		};
+
+		var container = $("#table")
+		var top = $("#id_headers_top").val();
+		var left = $("#id_headers_left").val();
+		var bottom = $("#id_headers_bottom").val();
+		
+		$("#id_headers_top").change(function(){
+			top = $(this).val();
+			rowCount = container.data('handsontable').rowCount
+			container.data('handsontable').render()
+		})
+		$("#id_headers_bottom").change(function(){
+			bottom = $(this).val();
+			rowCount = container.data('handsontable').rowCount
+			container.data('handsontable').render()
+		})
+		$("#id_headers_left").change(function(){
+			left = $(this).val();
+			rowCount = container.data('handsontable').rowCount
+			container.data('handsontable').render()
+		})
+	  	container.handsontable({
+		    {% if data %}data: {{ data|safe }},
+			{% else %}
+			data:[["Species","NRED Link","USCS Genome Browser Link"],["","",""]],
+			{% endif %}
+			
+		    startRows: 3,
+	    	startCols: 2,
+	        rowHeaders: true,
+	    	colHeaders: true,
+		    contextMenu:true,
+		    onChange:function(changes, source){
+		    	$("#id_{{ name }}").val(JSON.stringify(this.getData()))
+		    },
+		    cells: function (row, col, prop) {
+		    	if(row < Number(top)){
+		    		this.renderer= headerRenderer;
+		    	}
+    			if (col < Number(left)) {
+					
+      				this.renderer= headerRenderer;
+    			}
+    			if(row + Number(bottom) >= rowCount){
+					
+    					this.renderer= headerRenderer;
+    			}
+				
+    				this.renderer=this.normalRenderer;
+  			}
+		});  
+		
+		var rowCount = container.data('handsontable').rowCount
+	});	 
+	
+	
+	
+	
+})(jQuery); 
+
+//
+//function escapetd(){
+//	$("tr")
+//}
+//
+//]]>
+</script>
+<style type="text/css">
+	#id_{{ name }} { display:none}
+</style>
+
