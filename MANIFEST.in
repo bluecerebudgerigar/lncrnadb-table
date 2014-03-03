@@ -1,6 +1,6 @@
 include LICENSE.txt
 include README.md
-recursive-include djangocms_table/locale *
-recursive-include djangocms_table/templates *
-recursive-include djangocms_table/static *
+recursive-include lncrnadb_table/locale *
+recursive-include lncrnadb_table/templates *
+recursive-include lncrnadb_table/static *
 recursive-exclude * *.pyc
