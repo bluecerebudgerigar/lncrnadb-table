@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='lncrnadb_table',
     version='0.1',
-    packages=find_packages(),
+    packages=['djangocms_table', 'djangocms_table.migrations'],
     include_package_data=True,
     license='BSD License, I think',  # example license
     description='djangocms with added features for lncrnadb usage',
