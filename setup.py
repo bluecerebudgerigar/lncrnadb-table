@@ -9,7 +9,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='lncrnadb_table',
     version='0.1',
+<<<<<<< HEAD
     packages=[''],
+=======
+    packages=['lncrnadb_table'],
+>>>>>>> 89d68fa6adedc250e7becc46a46d281459afd85c
     include_package_data=True,
     license='BSD License, I think',  # example license
     description='djangocms with added features for lncrnadb usage',
@@ -30,4 +34,8 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+<<<<<<< HEAD
 )
+=======
+)
+>>>>>>> 89d68fa6adedc250e7becc46a46d281459afd85c
