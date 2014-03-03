@@ -1,4 +1,3 @@
-include LICENSE.txt
 include README.md
 recursive-include lncrnadb_table/locale *
 recursive-include lncrnadb_table/templates *
