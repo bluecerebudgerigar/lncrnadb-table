@@ -1,4 +1,4 @@
 include README.rst
-recursive-include lncrnadb_table/locale *
-recursive-include lncrnadb_table/templates *
-recursive-include lncrnadb_table/static *
+recursive-include lncrnadb-table/locale *
+recursive-include lncrnadb-table/templates *
+recursive-include lncrnadb-table/static *
