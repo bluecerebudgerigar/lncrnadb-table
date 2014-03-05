@@ -18,5 +18,6 @@ setup(
     url='https://github.com/bluecerebudgerigar/lncrnadb-table',
     author='Quek Xiu Cheng',
     author_email='quekxiucheng@gmail.com',
+    
 )
 
