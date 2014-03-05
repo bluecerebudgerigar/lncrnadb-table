@@ -10,6 +10,7 @@ setup(
     name='lncrnadb_table',
     version='0.1',
     packages=['lncrnadb_table'],
+    provides=['lncrnadb_table'],
     include_package_data=True,
     license='BSD License, I think',  # example license
     description='djangocms with added features for lncrnadb usage',
