@@ -5,7 +5,7 @@ from cms.plugin_base import CMSPluginBase
 from models import Annotation, Expression, Species, Literature, Nomenclature, Sequences, Associatedcomp
 from forms import AnnotationForm, ExpressionForm, SpeciesForm, LiteratureForm, NomenclatureForm, SequencesForm, AssociatedcompForm
 from django.utils import simplejson
-from utils import static_url
+from lncrnadbtable.utils import static_url
 from django.http import HttpResponseRedirect
 import re
 
