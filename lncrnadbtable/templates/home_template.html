@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load menu_tags %}
+
+
+{% block base_content %}
+
+
+<div id="homecontainer" class="homepage">
+	<div id="introtext" class="homepage">
+  {% placeholder home_intro_text %}
+  	<div id="main_search" class="styled-select">
+	  <h2>Search lncrnadb</h2>
+		  <input id="context_search" type="text" 			name="q"value="GeneID/Keywords/Functions/Species"></input>
+	  <h2> Set filter</h2>
+		  <select id="filter">
+			  <option>Any Species</option>
+			  
+			  <option>Homo sapiens</option>
+			  <option>Mus musculus</option>
+			  <option>Rattus norvegicus</option>
+			  <option>Bos taurus</option>
+			  <option>Pan troglodytes</option>
+			  <option>Xenopus laevis</option>
+			  <option>Gallus Gallus</option>
+			  <option>Danio rerio</option>
+			  <option>Drosophila melanogaster</option>
+			  <option>Canis familiaris</option>
+			  <option>Macaca mulatta </option>
+			  <option>Apis mellifera</option>
+			  <option>Monodelphis domestica</option>
+			  <option>Equus caballus</option>
+			  <option>Macropus eugenii</option>
+			  <option>Ovis aries</option>
+			  <option>Cavia porcellus</option>
+			  <option>Sus scrofa</option>
+			  <option>Saccharomyces cerevisiae</option>
+			  <option>Arabidopsis thaliana</option>
+			  <option>Brassica rapa</option>
+			  <option>Vitis vinifera</option>
+			  <option>Populus tremula</option>
+			  <option>Oryza sativa</option>
+			  <option>Lycopersicon esculentum</option>
+			  <option>Glycine max</option>
+			  <option>Medicago truncatula </option>
+			  <option>Oxytricha trifallax</option>
+			  <option>Paramecium tetraurelia</option>
+			  <option>Dictyostelium discoideum</option>
+			  <option>Neurospora crassa</option>
+			  <option>Schizosaccharomyces pombe</option>
+			  <option>Cricetulus griseus</option>
+			  <option>Pongo pygmaeus </option>
+			  <option>Microcricetus aureus</option>
+			  <option>Phytophthora infestans</option>
+			  <option>Xenopus tropicalis</option>
+			  <option>Cricetulus longicaudatus</option>
+			  <option>Loris tardigradus</option>
+			  <option>Nycticebus pygmaeus</option>
+			  <option>Otolemur garnettii</option>
+			  <option>Cheirogaleus medius</option>
+			  <option>Lepilemur dorsalis</option>
+			  <option>Lepilemur ruficaudatus</option>
+			  <option>Propithecus verreauxi</option>
+			  <option>Daubentonia madagascariensis</option>
+			  <option>Lemur coronatus</option>
+			  <option>Galago moholi</option>
+			  <option>Medicago sativa</option>
+			  <option>Caenorhabditis elegans</option>
+			  <option>Styela clava</option>
+			  <option>Strigamia maritima</option>
+			  <option>Oncorhynchus mykiss</option>
+			  <option>Bombyx mori</option>
+			  <option>Papio ursinus</option>
+			  <option>Macaca fascicularis</option>
+			  <option>Gasterosteus aculeatus</option>
+			  <option>Pongo abelii</option>
+			  <option>Gorilla gorilla</option>
+			  <option>Hylobates lar</option>
+			  <option>Papio hamadryas</option>
+			  <option>Pan paniscus </option>
+			  <option>Cercopithecus aethiops </option>
+			  <option>Aotus trivirgatus </option>
+			  <option>Saguinus imperator</option>
+			  <option>Saguinus oedipus</option>
+			  <option>Oryctolagus cuniculus</option>
+			  <option>Loxodonta africana</option>
+		 
+			  
+		  </select><span><button id="submit_button" >Submit</button></span>
+		 
+	  		</div>	  
+		</div>
+			
+  
+	<div id="menu_selection" class="nano homepage">
+		{% placeholder home_menu %}
+		
+</div>
+</div>
+
+{% endblock %}
+

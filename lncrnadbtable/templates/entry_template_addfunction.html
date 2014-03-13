@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+{% load sekizai_tags %}
+
+{% load cms_tags %}
+
+{% block base_content %}
+<div id="maincontainer" class="maincontainer">
+	<div id="center_maincontainer" class="column">
+  {% placeholder nomenclature %}
+  {% placeholder annotation %}
+  {% placeholder expression %}
+  {% placeholder species %}
+  {% placeholder literature %}
+  {% placeholder associatedcomp %}
+  {% placeholder sequences %}
+</div>
+<div id="left_maincontainer" class="column"></div>
+<div id="right_maincontainer" class="column"></div>
+  
+</div>
+
+
+{% addtoblock 'js' %}
+<script type="text/javascript"	>
+
+
+
+var checkboxes;
+// function to update div status base on checkbox status
+function checkbox_toggle(input_selector){
+	if ($(this).is(':checked') == true){
+		$('#' + header + '.entries_header').next().show();
+	}
+	else if ($(this).is(':checked') == false) {
+		$('#' + header + '.entries_header').next().hide();
+	}
+}
+
+$( document ).ready( function (){
+	// add checkboxes based on content //
+	$('div.entries_header').each(function(){
+		var header = $(this).text();
+		if (header.length > 1 )	{
+			$("#links").append('<input id='+ header + ' class="css-checkbox" type="checkbox"><label class=css-label for='+header+'>' + header + "</label>");
+			var input_selector = $('input[id=\'' + header + '\']' );
+			input_selector.change(checkbox_toggle())
+		}
+	});
+	
+	$('#None').remove()
+	
+	
+	//set the cookie
+	checkboxes = $('.css-checkbox');
+	checkboxes.change(
+		function setcookie() {
+		    var options= checkboxes.map(function() {
+		        if (this.checked) return this.id;
+		    }).get().join(',');
+		   $.cookie('new_cookie', options,{expires:1});
+		
+		});
+		
+	
+	//set checkbox status based on cookie
+	
+	var alreadySetCookies= $.cookie('new_cookie').split(',');
+	
+	for(var $cookie in alreadySetCookies) {
+	        $("input[id='" + alreadySetCookies[$cookie] + "']").attr("checked", "checked");
+	}
+
+	checkboxes.each(checkbox_toggle())
+
+	//set div to update checkbox base on toggle status
+	$('.entries_header').click(function (){
+		$(this).next().toggle();
+		var div_name = $(this).attr('id')
+		var input_selector = $('input[id=\'' + div_name + '\']' );
+		
+		if ($(this).next().is(":hidden")){
+			input_selector.prop('checked', false)
+		} else {
+			input_selector.prop	('checked', true)
+		}
+	});
+});
+
+</script>
+
+{% endaddtoblock %}
+
+
+{% endblock %}
+
+
+
+
+
+

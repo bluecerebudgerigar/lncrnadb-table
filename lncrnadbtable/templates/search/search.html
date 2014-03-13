@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load sekizai_tags %}
+{% load dajaxice_templatetags %}
+
+{% load cms_tags menu_tags %}
+{% block base_content %}
+    <h2>Search</h2>
+	<button onclick="Dajaxice.lncrnadb_table.sayhello(my_js_callback,{'test':1});">asd</button>
+	
+	<form id="Browse_filter" class="browser	">
+		<p> showing <span><input id="results_num" class="Literature" type="textarea" size="3" value=3 style="resize:none"> </textarea> of total {{ data|length}} results </span></p>
+	<input id="clickMe" type="button" value="refresh" onclick="showmore();" />
+	<input id="hideme" type="button" value="hideme" onclick="hidemore();" />
+	<input id="showall" type="button" value="showall" onclick="show_all();"/>
+	</form>
+
+
+
+        <table>
+
+			<form action="/search" method="get">
+			    <input type="text" name="q">
+			</form>            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" value="Search">
+                </td>
+            </tr>
+        </table>
+
+        {% if query %}
+            <h3>Results</h3>
+		
+			{% if page.object_list %}
+			<p> there is some in object list </p>
+			{% endif %}
+			
+            {% for result in page.object_list %}
+                <p>
+                    {{ result.object.get_absolute_url }}
+                    {{ result.object.hello }}
+                
+					
+					
+					
+					
+                </p>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+    </form>
+	
+	{% addtoblock "js" %}
+	
+	<script type="text/javascript">
+	
+	function my_js_callback(data){
+	    alert(data.message);
+	}
+	</script>
+	{% endaddtoblock %}
+{% endblock %}

@@ -1,0 +1,135 @@
+
+{% extends "base.html" %}
+{% load sekizai_tags %}
+
+{% load cms_tags %}
+
+{% block base_content %}
+<div id="maincontainer" class="maincontainer">
+	<div id="center_maincontainer" class="column">
+  {% placeholder nomenclature %}
+  {% placeholder annotation %}
+  {% placeholder expression %}
+  {% placeholder species %}
+  {% placeholder literature %}
+  {% placeholder associatedcomp %}
+  {% placeholder sequences %}
+</div>
+<div id="left_maincontainer" class="column"></div>
+<div id="right_maincontainer" class="column"></div>
+  
+</div>
+
+
+{% addtoblock 'js' %}
+<script type="text/javascript"	>
+
+
+
+var checkboxes;
+// function to update div status base on checkbox status
+function checkbox_toggle(object){
+	var header = $('#' + object.id + '.entries_header')
+	if ($(object).is(':checked') == true){
+		header.next().show();
+		header.children().addClass('down_arrow');
+		header.children().removeClass('up_arrow');
+	}
+	else if ($(object).is(':checked') == false) {
+		header.next().hide();
+		header.children().addClass('up_arrow');
+		header.children().removeClass('down_arrow');
+	}
+}
+
+
+$( document ).ready( function (){
+	// add checkboxes based on content //
+	$('#None').remove()
+
+	$($('div.entries_header').get().reverse()).each(function(){
+		var header = $(this).attr('id');
+
+		if (header.length > 1 )	{
+			$("#links").prepend('<input id='+ header + ' class="css-checkbox" type="checkbox"><label class=css-label for='+header+'>' + header.replace('_','\ ') + "</label>");
+		}
+	});
+	
+	$('input.css-checkbox').each(function(){
+		$(this).change(function(){checkbox_toggle(this)})
+	});
+
+	
+	
+	//set the cookie
+	checkboxes = $('.css-checkbox');
+	checkboxes.change(
+		function setcookie() {
+		    var options= checkboxes.map(function() {
+		        if (this.checked) return this.id;
+		    }).get().join(',');
+		   $.cookie('new_cookie', options, {expires :1, path:'/browse/'})
+		
+		});
+		
+	
+	//set checkbox status based on cookie
+	if ($.cookie('new_cookie'))**{
+	
+		var alreadySetCookies= $.cookie('new_cookie').split(',');
+	
+		for(var $cookie in alreadySetCookies) {
+		        $("input[id='" + alreadySetCookies[$cookie] + "']").attr("checked", "checked");
+		};
+	}
+
+	checkboxes.each(function(){
+		checkbox_toggle(this);
+	})
+	
+	
+
+	//set div to update checkbox base on toggle status
+	$('.entries_header').click(function (){
+		$(this).next().toggle();
+		var div_name = $(this).attr('id')
+		var input_selector = $('input[id=\'' + div_name + '\']' );
+		
+		
+		
+		
+		if ($(this).next().is(":hidden")){
+			input_selector.prop('checked', false);
+			$(this).children().removeClass('down_arrow')
+			$(this).children().addClass('up_arrow')
+	
+		} else {
+			input_selector.prop	('checked', true)
+			$(this).children().removeClass('up_arrow')
+			$(this).children().addClass('down_arrow')
+		}
+		var options= checkboxes.map(function() {
+		        if (this.checked) return this.id;
+		    }).get().join(',');
+			
+			
+			console.log(options)
+		$.cookie('new_cookie', options,{expires:1});
+		
+	});
+	$('#None').remove()
+	
+});
+
+</script>
+
+{% endaddtoblock %}
+
+
+{% endblock %}
+
+
+
+
+
+

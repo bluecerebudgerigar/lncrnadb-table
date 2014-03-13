@@ -1,0 +1,129 @@
+
+{% extends "base.html" %}
+{% load sekizai_tags %}
+
+{% load cms_tags %}
+
+{% block base_content %}
+<div id="maincontainer" class="maincontainer">
+	<div id="center_maincontainer" class="column">
+  {% placeholder nomenclature %}
+  {% placeholder annotation %}
+  {% placeholder expression %}
+  {% placeholder species %}
+  {% placeholder literature %}
+  {% placeholder associatedcomp %}
+  {% placeholder sequences %}
+</div>
+<div id="left_maincontainer" class="column"></div>
+<div id="right_maincontainer" class="column"></div>
+  
+</div>
+
+
+{% addtoblock 'js' %}
+<script type="text/javascript"	>
+
+
+
+var checkboxes;
+
+
+$( document ).ready( function (){
+	
+	// add checkboxes based on content //
+	$('div.entries_header').each(function(){
+		
+		var header = $(this).text();
+		if (header.length > 1 )	{
+			$("#links").append('<input id='+ header + ' class="css-checkbox" type="checkbox"><label class=css-label for='+header+'>' + header + "</label>");
+		
+		var input_selector = $('input[id=\'' + header + '\']' );
+		
+		input_selector.change(function(){
+			if (input_selector.is(':checked') == true){
+				
+				$('#' + header + '.entries_header').next().show();
+			}
+			else if (input_selector.is(':checked') == false) {
+				$('#' + header + '.entries_header').next().hide();
+			}
+			
+				
+			
+
+		});
+	}});
+	
+	//set the cookie
+
+	checkboxes = $('.css-checkbox');
+	
+
+	
+	
+	checkboxes.change(
+		function setcookie() {
+		    var options= checkboxes.map(function() {
+		        if (this.checked) return this.id;
+		    }).get().join(',');
+		   $.cookie('new_cookie', options,{expires:1});
+		
+		});
+			
+
+
+	var alreadySetCookies= $.cookie('new_cookie').split(',');
+
+	for(var $cookie in alreadySetCookies) {
+	        $("input[id='" + alreadySetCookies[$cookie] + "']").attr("checked", "checked");
+	}
+
+
+	checkboxes.each(function(){
+		console.log(this)
+		var input_selector = $('input[id=\'' + this.id + '\']' );
+		if (input_selector.is(':checked') == true){
+			$('#' + this.id + '.entries_header').next().show();
+		}
+		else if (input_selector.is(':checked') == false) {
+			$('#' + this.id + '.entries_header').next().hide();
+		}
+		
+	})
+
+	
+	
+	$('.entries_header').click(function (){
+		$(this).next().toggle();
+		var div_name = $(this).attr('id')
+		var input_selector = $('input[id=\'' + div_name + '\']' );
+		
+		if ($(this).next().is(":hidden")){
+			
+			input_selector.prop('checked', false)
+			
+			
+			
+		} else {
+			input_selector.prop	('checked', true)
+		}
+	});
+
+	
+		
+ 
+});
+
+</script>
+
+{% endaddtoblock %}
+
+
+{% endblock %}
+
+
+
+
+
+

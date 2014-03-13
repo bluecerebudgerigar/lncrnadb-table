@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load sekizai_tags %}
+{% load cms_tags %}
+
+{% block base_content %}
+<div id="maincontainer" class="maincontainer">
+	<div id="center_maincontainer" class="column">
+  {% placeholder nomenclature %}
+  {% placeholder annotation %}
+  {% placeholder expression %}
+  {% placeholder species %}
+  {% placeholder literature %}
+  {% placeholder associatedcomp %}
+  {% placeholder sequences %}
+</div>
+<div id="left_maincontainer" class="column"></div>
+<div id="right_maincontainer" class="column"></div>
+  
+</div>
+{% endblock %}
+//
+//{% addtoblock "js" %}  
+//
+//<script type="text/javascript"	>
+//var cookie_lover = $.cookie('test')
+//$.cookie("example", "foo")
+//
+//
+//
+//
+//
+//
+//
+//</script>
+//{% endaddtoblock %}
+
+{% addtoblock "js" %}  
+<script type="text/javascript"	>
+
+
+
+
+$( document ).ready( function (){
+	
+	
+	$('.entries_header').each(function(){
+	
+		var header = $(this).text();
+		if (header.length > 1 )	{
+			$("#links").append('<input id='+ header + ' class="css-checkbox" type="checkbox"><label class=css-label for='+header+'>' + header + "</label>");
+			var input_selector = $('input[id=\'' + header + '\']' )
+			input_selector.change(function(){
+				if (input_selector.attr('checked') == true){
+					console.log(header)
+					$('#' + header + '.entries_header').next().show();
+				}
+				else {
+					$('#' + header + '.entries_header').next().hide();
+				}
+
+			})
+		}
+	}); 
+	
+	
+	
+	
+	$('.entries_header').click(function (){
+		$(this).next().toggle();
+		//console.log($('input id=[' + $(this).attr('id')).attr('checked'))
+		console.log("hahah")
+	});
+	
+
+	
+	
+});
+</script>
+{% endaddtoblock %}
+
+
+
+
+
+
+
+
+
+

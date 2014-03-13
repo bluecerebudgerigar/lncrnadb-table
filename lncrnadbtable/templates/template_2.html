@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load menu_tags %}
+{% load cms_tags %}
+
+{% block base_content %}
+
+
+    {% ShowLimited 10 %}
+
+
+  {% placeholder template_2_content %}
+{% endblock %}
