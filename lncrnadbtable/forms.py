@@ -220,7 +220,6 @@ class LiteratureForm(ModelForm):
         correct_fields = []
         data = self.cleaned_data['table_data'] 
         #### '[[1,2,3],[2,3,4]]
-        print data
     
         rclean =re.compile(r'\]|\[|\"')
         
@@ -241,8 +240,10 @@ class LiteratureForm(ModelForm):
         corrected = convert_ref_literature(wrong_entries) ## return an list of list
         #
         correct_fields.extend(corrected)
-        data = simplejson.dumps(correct_fields)
+        print correct_fields
         
+        data = simplejson.dumps(correct_fields)
+        data = data.replace("\\","")
        # data = unicode(correct_fields)
        # print data
         
