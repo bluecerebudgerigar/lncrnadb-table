@@ -3,7 +3,41 @@
 <div id="table"></div>
 <script type="text/javascript">
 //<![CDATA]
-var lol;
+var CustomTextEditor = Handsontable.editors.TextEditor.prototype.extend();
+
+
+var onBeforeKeyDown = function (event) {
+
+    var instance = this; //context of listener function is always set to Handsontable.Core instance
+    var editor = this.getActiveEditor();
+
+    switch (event.keyCode){
+    case Handsontable.helper.keyCode.ARROW_UP:	
+      event.stopImmediatePropagation();         // prevent EditorManager from processing this event
+      break;
+    case Handsontable.helper.keyCode.ARROW_DOWN:
+
+  
+
+      event.stopImmediatePropagation();         // prevent EditorManager from processing this event
+      break;
+    }
+};
+
+
+
+CustomTextEditor.prototype.open = function () {
+    var instance = this; //context of listener function is always set to Handsontable.Core instance
+ 	 Handsontable.editors.TextEditor.prototype.open.apply(this)
+    this.instance.addHook('beforeKeyDown', onBeforeKeyDown);       // register listener
+};
+
+CustomTextEditor.prototype.close = function () {
+	 Handsontable.editors.TextEditor.prototype.close.apply(this)
+	
+    this.instance.removeHook('beforeKeyDown', onBeforeKeyDown);    // remove listener
+};
+
 	(function($) {
 	
 	$(document).ready(function () {
@@ -65,6 +99,8 @@ var lol;
 	    	colHeaders: true,
 		    contextMenu:true,
 		    minSpareRows: 1,
+				editor: CustomTextEditor,
+				
 			
 		    onChange:function(changes, source){
 		    	$("#id_{{ name }}").val(JSON.stringify(this.getData()))

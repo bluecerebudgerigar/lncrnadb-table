@@ -1,11 +1,9 @@
-
-
 {% load sekizai_tags %}
+{% autoescape off %}
 
 <div id="{{ instance.name }}" class="{{instance.plugin_type}}">
 	<div id="{{ instance.name}}" class="entries_header">{{ instance.name }} <span class="css_icon"></span></div>
 	
-	{% autoescape off %}
 
 	<div id="{{instance.name}}_body" class="entries_body">
 
@@ -20,7 +18,6 @@
 		{% endfor %}
 		{% endif %}
 	</tr>{% endfor %}
-	{% endautoescape %}
 </table>
 <form id="literature_filter" class="Literature">
 	<p> showing <span><input id="results_num" class="Literature" type="textarea" size="3" value=3 style="resize:none"> </textarea> of total {{ data|length}} results </span></p>
@@ -30,6 +27,8 @@
 </form>
 	</div>
 </div>
+{% endautoescape %}
+
 {% addtoblock "js" %}  
 
 
