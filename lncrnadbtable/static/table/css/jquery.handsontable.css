@@ -23,7 +23,6 @@
   -o-user-select: none;
   user-select: none;
   border-spacing: 0;
-  overflow : scrollable;
 }
 
 .handsontable th,

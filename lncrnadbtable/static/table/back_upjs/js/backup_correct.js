@@ -3872,12 +3872,10 @@ Handsontable.TextEditor = function (instance, td, row, col, prop, keyboardProxy,
         if (texteditor.isCellEdited) {
           var selected = instance.getSelected();
           var isMultipleSelection = !(selected[0] === selected[2] && selected[1] === selected[3]);
-          if(that.isOpened()){
           if ((event.ctrlKey && !isMultipleSelection) || event.altKey) { //if ctrl+enter or alt+enter, add new line
-              var caretPosition = that.wtDom.getCaretPosition(that.TEXTAREA);
-              that.val(that.val().substr(0, caretPosition) + '\n' + that.val().substr(caretPosition));
-      that.wtDom.setCaretPosition(that.TEXTAREA, caretPosition + 1);
-
+            keyboardProxy.val(keyboardProxy.val() + '\n');
+            console.log(keyboardProxy.val)
+            console.log(that)
             keyboardProxy[0].focus();
             event.stopPropagation();
           }
