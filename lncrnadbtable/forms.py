@@ -240,10 +240,8 @@ class LiteratureForm(ModelForm):
         corrected = convert_ref_literature(wrong_entries) ## return an list of list
         #
         correct_fields.extend(corrected)
-        print correct_fields
-        
+        correct_fields = [[i.replace("\\","") for i in x ] for x in correct_fields]
         data = simplejson.dumps(correct_fields)
-        data = data.replace("\\","")
        # data = unicode(correct_fields)
        # print data
         
