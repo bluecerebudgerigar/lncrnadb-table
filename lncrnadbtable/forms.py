@@ -6,17 +6,47 @@ from django.utils.translation import ugettext_lazy as _
 import csv
 from django.utils import simplejson
 import re
-from bs4test_mod import convert_ref, convert_ref_literature
+from bs4test_mod import convert_ref, convert_ref_literature, sequence_converter, convert_function_sequence 
 import json, simplejson
+
+
+from cms.models import Page
+
+from menus.base import NavigationNode
+
 
 
 class SequencesForm(ModelForm):
     table_data = forms.CharField(widget=SequencesTableWidget)
     csv_upload = forms.FileField(label=_("upload .csv file"), help_text=_("upload a .csv file to fill the table up."), required=False)
     
-    
-    
-    
+
+
+    def clean_table_data(self):
+        data = self.cleaned_data['table_data']
+        seq_name = self.instance.page.get_slug()
+        seq_name = str(seq_name)
+        data2 = json.loads(data)
+        data2 = convert_function_sequence(data2, seq_name)
+        print "this is converted data%s " % data2
+        data2 = simplejson.dumps(data2)
+        print data2
+        
+        
+
+        
+       
+        return data2 
+        
+  #  print type(data)
+  #  data2= json.loads(data)
+  #  header =data.pop(0)
+  #  accession_list = [x[1] for x in data]
+  #  print accession_list     
+  #  
+  #
+  #
+
     def clean_csv_upload(self):
         if self.cleaned_data['csv_upload']:
             csv_reader = csv.reader(self.cleaned_data['csv_upload'], dialect='excel')
