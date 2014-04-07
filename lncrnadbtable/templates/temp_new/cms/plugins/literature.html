@@ -1,0 +1,63 @@
+{% load sekizai_tags %}
+{% autoescape off %}
+
+<div id="{{ instance.name }}" class="{{instance.plugin_type}}">
+	<div id="{{ instance.name}}" class="entries_header">{{ instance.name }} <span class="css_icon"></span></div>
+	
+
+	<div id="{{instance.name}}_body" class="entries_body">
+
+<table id="{{ instance.name }}" class="{{instance.plugin_type}}">{% for row in data %}
+	{% if not "" in row %}
+	<tr class="{{instance.name}}">{% for cell in row %}
+		{% if forloop.parentloop.counter <= instance.headers_top or forloop.counter <= instance.headers_left or forloop.parentloop.revcounter <= instance.headers_bottom %}
+			<th>{%if cell %}{{ cell }}{% endif %}</th>
+		{% else %}
+			<td>{% if cell %}{{ cell }}{% endif %}</td>
+		{% endif %}
+		{% endfor %}
+		{% endif %}
+	</tr>{% endfor %}
+</table>
+<form id="literature_filter" class="Literature">
+	<p> showing <span><input id="results_num" class="Literature" type="textarea" size="3" value=3 style="resize:none"> </textarea> of total {{ data|length}} results </span></p>
+<input id="clickMe" type="button" value="refresh" onclick="showmore();" />
+<input id="hideme" type="button" value="hideme" onclick="hidemore();" />
+<input id="showall" type="button" value="showall" onclick="show_all();"/>
+</form>
+	</div>
+</div>
+{% endautoescape %}
+
+{% addtoblock "js" %}  
+
+
+<script type="text/javascript"	>
+$( document ).ready( function (){
+	var number = $("#results_num").val();
+	$("tr.Literature:gt(" + number  +")").hide();
+}) 
+
+function showmore(){
+	var number = $("#results_num").val();
+	console.log(number)
+	$("tr.Literature").show();
+	
+	$("tr.Literature:gt(" + number  +")").hide();
+}
+
+function hidemore(){
+	$("tr.Literature:gt(3)").hide();
+	$("#results_num").val("{{ 3 }}");
+	
+	
+}
+
+function show_all(){
+	$("tr.Literature").show();
+	$("#results_num").val("{{ data|length}}");
+	
+}
+
+</script>
+{% endaddtoblock %}
