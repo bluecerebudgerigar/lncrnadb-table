@@ -221,8 +221,8 @@ class sequence_converter(object):
             old_entry = self.original_dict[entry_no]
             if len(old_entry) > 2:
                 comments = str(old_entry.pop(2))
-                
-            details.insert(2,comments)
+            if len(self.header) > 4:
+                details.insert(2,comments)
             self.original_dict[entry_no] = details
     
     def build_return_array(self):
