@@ -38,7 +38,7 @@ class Sequences(CMSPlugin):
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
     headers_bottom = models.PositiveSmallIntegerField(_("bottom"), default=0)
-
+    sequence_prefix = models.CharField(_("sequence_prefix"), max_length=40)
     table_data = models.TextField(_("table data"))
 
 
