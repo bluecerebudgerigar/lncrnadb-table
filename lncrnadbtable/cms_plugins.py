@@ -251,7 +251,7 @@ class ExpressionPlugin(CMSPluginBase):
 class SpeciesPlugin(CMSPluginBase):
     model = Species
     form = SpeciesForm
-    render_template = "templates/cms/plugins/species.html"
+    render_template = "cms/plugins/species.html"
     text_enabled = True
 
     fieldsets = (
