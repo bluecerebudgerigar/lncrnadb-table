@@ -12,7 +12,7 @@ import re
 class AssociatedcompPlugin(CMSPluginBase):
     model = Associatedcomp
     form = AssociatedcompForm
-    render_template = "templates/cms/plugins/associatedcomp.html"
+    render_template = "cms/plugins/associatedcomp.html"
     text_enabled = True
 
     fieldsets = (
@@ -56,7 +56,7 @@ class AssociatedcompPlugin(CMSPluginBase):
 class SequencesPlugin(CMSPluginBase):
     model = Sequences
     form = SequencesForm
-    render_template = "templates/cms/plugins/sequences.html"
+    render_template = "cms/plugins/sequences.html"
     text_enabled = True
 
     fieldsets = (
@@ -105,7 +105,7 @@ class SequencesPlugin(CMSPluginBase):
 class NomenclaturePlugin(CMSPluginBase):
     model = Nomenclature
     form = NomenclatureForm
-    render_template = "templates/cms/plugins/nomenclature.html"
+    render_template = "cms/plugins/nomenclature.html"
     text_enabled = True
 
     fieldsets = (
@@ -153,7 +153,7 @@ class NomenclaturePlugin(CMSPluginBase):
 class AnnotationPlugin(CMSPluginBase):
     model = Annotation
     form = AnnotationForm
-    render_template = "templates/cms/plugins/annotation.html"
+    render_template = "cms/plugins/annotation.html"
     text_enabled = True
     
 
@@ -201,7 +201,7 @@ class AnnotationPlugin(CMSPluginBase):
 class ExpressionPlugin(CMSPluginBase):
     model = Expression
     form = ExpressionForm
-    render_template = "templates/cms/plugins/expression.html"
+    render_template = "cms/plugins/expression.html"
     text_enabled = True
 
     fieldsets = (
@@ -301,7 +301,7 @@ class SpeciesPlugin(CMSPluginBase):
 class LiteraturePlugin(CMSPluginBase):
     model = Literature
     form = LiteratureForm
-    render_template = "templates/cms/plugins/literature.html"
+    render_template = "cms/plugins/literature.html"
     text_enabled = True
 
     fieldsets = (
