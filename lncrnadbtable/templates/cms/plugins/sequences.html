@@ -7,7 +7,6 @@
 
 
 	<table id="{{ instance.name }}" class="{{instance.plugin_type}}">{% for row in data %}
-		{% if not "" in row %}
 		<tr>{% for cell in row %}
 			{% if forloop.parentloop.counter <= instance.headers_top or forloop.counter <= instance.headers_left or forloop.parentloop.revcounter <= instance.headers_bottom %}
 				<th>{%if cell %}{{ cell }}{% endif %}</th>
@@ -15,7 +14,6 @@
 				<td>{% if cell %}{{ cell }}{% endif %}</td>
 			{% endif %}
 			{% endfor %}
-			{% endif %}
 		</tr>{% endfor %}
 		{% endautoescape %}
 	</table>
@@ -31,20 +29,91 @@
 
 //$('#' + table_name ).truncate();a
 $(document).ready(function(){
+	var fasta_column;
+	var sequence_column;
+	var sequence_titles = {}
+	var dialog_title = "Showing Sequence : "
+	
+	$(".SequencesPlugin").find('th').each(function(index, val){
+		if ( /Fasta_sequence/i.test($(val).html())){
+			fasta_column = index;
+		}
+		if ( /Name/i.test($(val).html())){
+			sequence_column = index;
 
-  $("#Sequences .SequencesPlugin td").each(function(i,v){
-    var count = parseInt($( this).text().length);
-    var maxChars = 210;
-    if(count > maxChars){
-      var str = $(this).text();
-      var trimmed = str.substr(0, maxChars);
-      $(v).text(trimmed + '...');  
+		}
+	})
 
 
-       
-  }});
+  $(".SequencesPlugin tr").each(function(index, val){
+		if (index == 0 ){
+			return
+		}
+		else{
+		var sequence_name = $(val.children).eq(sequence_column).text()
+		sequence_titles[index] = sequence_name
+		var target = $(val.children).eq(fasta_column)
+		var sequence = target.text()
+		
+		target.wrapInner("<div id='"+ index + "' class='sequence_pop' style='width:400px;wheight:200px;word-wrap:break-word;overflow-y;'><p></p<</div")
+		target.append("<p id='" + index + "' class='shower'>Show Sequence</p>")
+		
+		console.log(sequence)
+	  }
+	})
+	
+	$(".sequence_pop").dialog({
+		width : 600,
+		height : 400,
+    modal: true,
+		resizable: true,
+    position: ['center',50],
+		
+		
+    autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      },
+			buttons : [
+			{
+				text: "Close",
+				click: function(){
+					$( this ).dialog("close");
+				}
+			}]
+			
+		})
+   
+	    $( ".shower" ).click(function() {
+				element_id = $(this).attr('id')
+				
+				$("#" + element_id + ".sequence_pop").dialog('option', 'title', dialog_title.concat(sequence_titles[element_id]))
+				$("#" + element_id + ".sequence_pop").dialog( "open");
+				
+	 
+			})
+	
+
+})		
+		
+//		
+//    var count = parseInt($( this).text().length);
+//    var maxChars = 210;
+//    if(count > maxChars){
+//      var str = $(this).text();
+//      var trimmed = str.substr(0, maxChars);
+//      $(v).text(trimmed + '...');  
+//
+//
+			
+  
  
 
-})
+
 </script>
 {% endaddtoblock %}

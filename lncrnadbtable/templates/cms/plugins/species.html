@@ -59,12 +59,13 @@ $(document).ready( function() {
 			
 				var species = $(val.children).eq(species_column)
 				var code = species.text()
-				species_code = species_dictionary[code] 
-				var position = target.text()
-				var url_link = ucsc + species_code + "&position=" + escape(position)
-				console.log(url_link)
-				target.html("<a href=" + url_link + ">" + species_code + " " + position + "</a>")
-				
+				species_code = species_dictionary[code]
+				if (species_code != undefined){
+				  var position = target.text()
+				  var url_link = ucsc + species_code + "&position=" + escape(position)
+				  console.log(url_link)
+				  target.html("<a href=" + url_link + ">" + species_code + " " + position + "</a>")
+			  }
 
 			}
 			
@@ -74,7 +75,6 @@ $(document).ready( function() {
 	)
 	
 	
-alert(species_dictionary["Vicugna pacos( Alpaca )"])
 })
 </script>
 	
