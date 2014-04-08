@@ -5,14 +5,14 @@ from cms.plugin_base import CMSPluginBase
 from models import Annotation, Expression, Species, Literature, Nomenclature, Sequences, Associatedcomp
 from forms import AnnotationForm, ExpressionForm, SpeciesForm, LiteratureForm, NomenclatureForm, SequencesForm, AssociatedcompForm
 from django.utils import simplejson
-from lncrnadbtable.utils import static_url
+from utils import static_url
 from django.http import HttpResponseRedirect
 import re
 
 class AssociatedcompPlugin(CMSPluginBase):
     model = Associatedcomp
     form = AssociatedcompForm
-    render_template = "cms/plugins/associatedcomp.html"
+    render_template = "templates/cms/plugins/associatedcomp.html"
     text_enabled = True
 
     fieldsets = (
@@ -56,12 +56,15 @@ class AssociatedcompPlugin(CMSPluginBase):
 class SequencesPlugin(CMSPluginBase):
     model = Sequences
     form = SequencesForm
-    render_template = "cms/plugins/sequences.html"
+    render_template = "templates/cms/plugins/sequences.html"
     text_enabled = True
 
     fieldsets = (
         (None, {
             'fields': ('name',)
+        }),
+        (None, {
+            'fields':('sequence_prefix',)
         }),
         (_('Headers'), {
 
@@ -102,7 +105,7 @@ class SequencesPlugin(CMSPluginBase):
 class NomenclaturePlugin(CMSPluginBase):
     model = Nomenclature
     form = NomenclatureForm
-    render_template = "cms/plugins/nomenclature.html"
+    render_template = "templates/cms/plugins/nomenclature.html"
     text_enabled = True
 
     fieldsets = (
@@ -150,7 +153,7 @@ class NomenclaturePlugin(CMSPluginBase):
 class AnnotationPlugin(CMSPluginBase):
     model = Annotation
     form = AnnotationForm
-    render_template = "cms/plugins/annotation.html"
+    render_template = "templates/cms/plugins/annotation.html"
     text_enabled = True
     
 
@@ -198,7 +201,7 @@ class AnnotationPlugin(CMSPluginBase):
 class ExpressionPlugin(CMSPluginBase):
     model = Expression
     form = ExpressionForm
-    render_template = "cms/plugins/expression.html"
+    render_template = "templates/cms/plugins/expression.html"
     text_enabled = True
 
     fieldsets = (
@@ -248,7 +251,7 @@ class ExpressionPlugin(CMSPluginBase):
 class SpeciesPlugin(CMSPluginBase):
     model = Species
     form = SpeciesForm
-    render_template = "cms/plugins/species.html"
+    render_template = "templates/cms/plugins/species.html"
     text_enabled = True
 
     fieldsets = (
@@ -298,7 +301,7 @@ class SpeciesPlugin(CMSPluginBase):
 class LiteraturePlugin(CMSPluginBase):
     model = Literature
     form = LiteratureForm
-    render_template = "cms/plugins/literature.html"
+    render_template = "templates/cms/plugins/literature.html"
     text_enabled = True
 
     fieldsets = (

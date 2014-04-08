@@ -85,6 +85,8 @@ class sequence_converter(object):
         self.seq_name = seq_name
         self.data = json_data[1:]
         self.header = json_data.pop(0)
+        self.detail_dict = {} 
+        self.accession_uid_map = {}
         self.return_array = [self.header]
     
     
@@ -92,17 +94,13 @@ class sequence_converter(object):
     def convert_data_to_dict(self):
         
         self.original_dict = { key : value for key, value in enumerate(self.data)}
-        
-        
         accession_list = [str(x[1]).lower() for x in self.data if x[1] ]
         self.data_dict = {key : value for key, value in enumerate(accession_list)}
-        
         self.reverse_dict = { value : key for key, value in enumerate(accession_list) }
         
         
     def find_unmatched_queries(self):
-        unmatch = dict([ (x,y) for x,y in self.data_dict.iteritems() if re.match("<[^>]*>", y ) is None])
-        print unmatch
+        unmatch = dict([ (x,y) for x,y in self.data_dict.iteritems() if re.match("<[^>]*>", y ) is None if "," not in y])
         self.unmatch =  unmatch
         
         
@@ -122,6 +120,7 @@ class sequence_converter(object):
         url_response = url_response.read()                                    
         url_response = BeautifulSoup(url_response)                            
         self.url_response = url_response
+
         
         
     def find_multimapper(self):
@@ -139,10 +138,8 @@ class sequence_converter(object):
         for x in multi_mapper:
             try:
                 main_key = self.reverse_dict[x]
-                print main_key
                 del self.unmatch[main_key]
                 self.original_dict[main_key] = ["Error Multi-mapper found ",x,"check id"]
-                
             except ValueError:
                 pass
             except KeyError:
@@ -170,36 +167,43 @@ class sequence_converter(object):
     def accession_to_uid(self):
         url_response = self.url_response
         uid_list = [x.get_text() for x in url_response.find_all("id")]
-        self.accession_uid_map = dict([ (str(uid), unmatch ) for unmatch, uid in zip(self.unmatch_list.split(','), uid_list)])
         self.uid_list = ",".join(uid_list)
-                
-        
-        
-                    
-    def find_details(self):
+
+
+    def find_details(self, dbtype):
         url_response = self.url_response
         url_response = url_response.find_all("gbseq")
-        detail_dict = {}
         
-        for x, y in zip(url_response, self.uid_list.split(',')):
+        for x in url_response:
             gbseq_primary = x.find("gbseq_primary")
-            gbseq_organism = str(x.find("gbseq_organism").get_text())
-            gbseq_sequence = str(x.find("gbseq_sequence").get_text())
+            try :
+                gbseq_organism = str(x.find("gbseq_organism").get_text())
+            except AttributeError:
+                gbseq_organims = "No Organism is found"
+            try :
+                gbseq_sequence = str(x.find("gbseq_sequence").get_text())
+            except AttributeError:
+                gbseq_sequence = "No Sequence Found"
+                
+            gbseq_ids =  x.find_all("gbseqid", text=re.compile('gi'))
+            gbseq_id_text = gbseq_ids[0].get_text()
+            gbseq_id_text = gbseq_id_text[3:]
             
             if gbseq_primary is None:
-                gbseq_primary = x.find("gbseq_accession-version")
+                gbseq_primary = x.find("gbseq_primary-accession")
                 gbseq_primary = ",".join(gbseq_primary)
             else:
                 gbseq_primary = str(gbseq_primary.get_text())
                 result = re.findall('\s([A-Za-z0-9\.]+)\s',gbseq_primary)
                 gbseq_primary = ",".join(result)
-                
-            gbseq_primary = ["<a href=https://www.ncbi.nlm.nih.gov/nuccore/%s>%s</a>" % (x,x) for x in gbseq_primary.split(",")]
+            
+            
+            self.accession_uid_map[str(gbseq_id_text)] = (str(gbseq_primary)).lower()
+            gbseq_primary = ["<a href=https://www.ncbi.nlm.nih.gov/%s/%s>%s</a>" % (dbtype,x,x) for x in gbseq_primary.split(",")]
             gbseq_primary = ",".join(gbseq_primary)
-            detail_dict[str(y)]= [str(gbseq_primary), str(gbseq_organism),  str(gbseq_sequence)]
+            self.detail_dict[gbseq_id_text]= [str(gbseq_primary), str(gbseq_organism),  str(gbseq_sequence)]
         
         
-        self.detail_dict = detail_dict 
         
         
     def reverse_match_details(self):
@@ -208,13 +212,17 @@ class sequence_converter(object):
         reverse_dict = self.reverse_dict ##search term is key, value is the entry no  
         for uid, details in detail_dict.iteritems():
             search_term  = accession_uid_map[uid]
-            entry_no = reverse_dict[search_term] + 1
+            entry_no = reverse_dict[search_term] 
             
-            sequence_name = "%s_%s_%s" % (self.seq_name, details[1], entry_no)
+            sequence_name = "%s_%s_%s" % (self.seq_name, details[1], entry_no + 1)
             sequence_name = sequence_name.lower()
             sequence_name = re.sub("\s","",sequence_name)
             details.insert(0, sequence_name)
-            
+            old_entry = self.original_dict[entry_no]
+            if len(old_entry) > 2:
+                comments = str(old_entry.pop(2))
+                
+            details.insert(2,comments)
             self.original_dict[entry_no] = details
     
     def build_return_array(self):
@@ -238,17 +246,11 @@ class sequence_converter(object):
 def convert_function_sequence(json_data, pagename):
     
     
-    seq_convertor = sequence_converter(json_data, pagename)            
-    
+    seq_convertor = sequence_converter(json_data, pagename)  
     seq_convertor.convert_data_to_dict()
-    print "this is %s" % seq_convertor.data
-    
-    
     seq_convertor.find_unmatched_queries()
     seq_convertor.unmatched_as_list()
-    
-  
-    
+        
     esearch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucleotide&term="
     esearch_url = "%s%s" % (esearch_header, seq_convertor.unmatch_list)
     
@@ -258,24 +260,26 @@ def convert_function_sequence(json_data, pagename):
         print "Error in HTTP"
         return seq_convertor.json_data
     
-    
-    
     seq_convertor.find_multimapper()
     seq_convertor.find_unfound()
     seq_convertor.unmatched_as_list()
     
-    print seq_convertor.unmatch_list
-    print seq_convertor.unmatch
-    print seq_convertor.data_dict
+    esearch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucest&term="
+    esearch_url = "%s%s" % (esearch_header, seq_convertor.unmatch_list)
+    
+    seq_convertor.find_multimapper()
+    seq_convertor.find_unfound()
+    seq_convertor.unmatched_as_list()
 
     if len(seq_convertor.unmatch_list) > 0:
+        esearch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucleotide&term="
+        esearch_url = "%s%s" % (esearch_header, seq_convertor.unmatch_list)
         try :
             seq_convertor.read_get_beauty(esearch_url)
         except urllib2.HTTPError:
             print "Error in HTTP"
             return seq_convertor.json_data
     
-
         seq_convertor.accession_to_uid()
         efetch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id="
         efetch_url = "%s%s&retmode=xml" % (efetch_header, seq_convertor.uid_list)
@@ -285,16 +289,38 @@ def convert_function_sequence(json_data, pagename):
             print "Error in HTTP"
             return seq_convertor.json_data
           
-            
-        seq_convertor.find_details()
-        seq_convertor.reverse_match_details()
-        seq_convertor.build_return_array()
-    #   seq_convertor.fix_sequence_name()
-        
+        seq_convertor.find_details('nucore')
+
+        esearch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucest&term="
+        esearch_url = "%s%s" % (esearch_header, seq_convertor.unmatch_list)
+        try :
+            seq_convertor.read_get_beauty(esearch_url)
+        except urllib2.HTTPError:
+            print "Error in HTTP"
+            return seq_convertor.json_data
     
-        return seq_convertor.return_array   
 
+        seq_convertor.accession_to_uid()
+        efetch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucest&id="
+        efetch_url = "%s%s&retmode=xml" % (efetch_header, seq_convertor.uid_list)
+        try:
+            seq_convertor.read_get_beauty(efetch_url)
+        except urllib2.HTTPError:
+            print "Error in HTTP"
+            return seq_convertor.json_data
+          
+        seq_convertor.find_details('nucore')
+        seq_convertor.reverse_match_details()
+        
+        print "##### section of nucore #####"
+        print "this is the detail_dict %s " % seq_convertor.detail_dict
+        print "this is the accession_map %s " % seq_convertor.accession_uid_map
+        print "this is the reverse dict %s " % seq_convertor.reverse_dict
+        print "this  is self.original_dict %s" % seq_convertor.original_dict
+        
+        
+        
 
-
-    else:
-        return json_data
+    
+    seq_convertor.build_return_array()
+    return seq_convertor.return_array

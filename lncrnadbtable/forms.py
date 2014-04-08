@@ -24,13 +24,13 @@ class SequencesForm(ModelForm):
 
     def clean_table_data(self):
         data = self.cleaned_data['table_data']
-        seq_name = self.instance.page.get_slug()
-        seq_name = str(seq_name)
+        seq_name = str(self.cleaned_data['sequence_prefix'])
+        seq_name = seq_name.strip()
+        #seq_name = self.instance.page.get_slug()
         data2 = json.loads(data)
         data2 = convert_function_sequence(data2, seq_name)
-        print "this is converted data%s " % data2
         data2 = simplejson.dumps(data2)
-        print data2
+
         
         
 
