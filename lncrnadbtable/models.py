@@ -8,7 +8,7 @@ class Associatedcomp(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Associatedcomp")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
@@ -33,7 +33,7 @@ class Sequences(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Sequences")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
@@ -75,7 +75,7 @@ class Annotation(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Annotation")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=0)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=1)
@@ -97,7 +97,7 @@ class Expression(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Expression")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
@@ -116,7 +116,7 @@ class Species(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Species")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
@@ -139,7 +139,7 @@ class Literature(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Literature")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
