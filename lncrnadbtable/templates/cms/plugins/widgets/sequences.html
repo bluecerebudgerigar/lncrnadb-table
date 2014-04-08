@@ -56,11 +56,11 @@ var lol;
 	  	container.handsontable({
 		    {% if data %}data: {{ data|safe }},
 			{% else %}
-			data:[["Sequence Name","Sequence Accesion IDs","Species","Fasta_sequence"],["","","",""]],
+			data:[["Sequence Name","INSCDS Accession IDs","Comments","Species","Fasta_sequence"],["","","","",""]],
 			{% endif %}
 			
 		    startRows: 2,
-	    	startCols: 4,
+	    	startCols: 5,
 	        rowHeaders: true,
 	    	colHeaders: true,
 		    contextMenu:true,
