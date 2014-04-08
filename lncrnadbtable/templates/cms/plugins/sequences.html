@@ -35,7 +35,7 @@ $(document).ready(function(){
 	var dialog_title = "Showing Sequence : "
 	
 	$(".SequencesPlugin").find('th').each(function(index, val){
-		if ( /Fasta_sequence/i.test($(val).html())){
+		if ( /Fasta/i.test($(val).html())){
 			fasta_column = index;
 		}
 		if ( /Name/i.test($(val).html())){
