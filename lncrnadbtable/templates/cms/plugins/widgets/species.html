@@ -1,6 +1,6 @@
 
 
-<div id="table"></div>
+<div id="table" style="margin-bottom:100px"></div>
 <script type="text/javascript">
 //<![CDATA]
 
@@ -48,7 +48,7 @@ CustomTextEditor.prototype.close = function () {
 	  		$(td).css({
 	    		'background':'#ccc',
 	    		'font-weight':'bold',
-				'min-width':'30em'
+					'width':'200px'
 				
 	  		});
 		};
@@ -60,10 +60,9 @@ CustomTextEditor.prototype.close = function () {
 	  		$(td).css({
 	    		'background':'white',
 	    		'font-weight':'normal',
-				'min-width':'30em'
+					'width':'200px'
 				
 	  		});
-			 lol = td
 			return td;
 			
 		};
@@ -91,15 +90,25 @@ CustomTextEditor.prototype.close = function () {
 	  	container.handsontable({
 		    {% if data %}data: {{ data|safe }},
 			{% else %}
-			data:[["Species","NRED Link","USCS Genome Browser Link"],["","",""]],
+			data:[["Species","USCS Genome Browser Link"],["",""]],
 			{% endif %}
 			
-		    startRows: 3,
+		    startRows: 4,
 	    	startCols: 2,
 	      rowHeaders: true,
 	    	colHeaders: true,
 		    contextMenu:true,
 				editor: CustomTextEditor,
+				columns: [
+				  { type : 'autocomplete',
+					source : ["Homo Sapiens ( Human )","Vicugna pacos ( Alpaca )","Dasypus novemcinctus ( Armadillo )","Otolemur garnettii ( Bushbaby )","Papio hamadryas ( Baboon )","Papio anubis ( Baboon )","Felis catus ( Cat )","Pan troglodytes ( Chimpanzee )","Bos Taurus ( Cow )","Canis familiaris  ( Dog )","Tursiops truncatus ( Dolphin )","Loxodonta africana  ( Elephant )","Mustela putorius furo ( Ferret )","Nomascus leucogenys ( Gibbon )","Gorilla  gorilla ( Gorilla )","Cavia  porcellus ( Guinea pig )","Erinaceus  europaeus ( Hedgehog )","Equus  caballus ( Horse )","Dipodomys  ordii ( Kangaroo rat )","Trichechus manatus latirostris ( Manatee )","Callithrix  jacchus ( Marmoset )","Pteropus vampyrus ( Megabat )","Myotis  lucifugus ( Microbat )","Mus  musculus  ( Mouse )","Microcebus  murinus ( Mouse lemur )","Heterocephalus glaber ( Naked mole-rat )","Monodelphis  domestica ( Opossum )","Pongo abelii ( Orangutan )","Ailuropoda melanoleuca ( Panda )","Sus  scrofa ( Pig )","Ochotona princeps ( Pika )","Ornithorhynchus  anatinus ( Platypus )","Oryctolagus  cuniculus ( Rabbit )","Rattus  norvegicus   ( Rat )","Macaca mulatta ( Rhesus )","Procavia  capensis ( Rock hyrax )","Ovis aries ( Sheep )","Sorex  araneus ( Shrew )","Choloepus  hoffmanni   ( Sloth )","Spermophilus tridecemlineatus ( Squirrel )","Saimiri boliviensis ( Squirrel monkey )","Tarsius syrichta ( Tarsier )","Sarcophilus harrisii ( Tasmanian devil )","Echinops  telfairi ( Tenrec )","Tupaia belangeri ( Tree shrew )","Macropus  eugenii ( Wallaby )","Ceratotherium simum simum ( White rhinoceros )","Alligator mississippiensis ( American alligator )","Gadus morhua ( Atlantic cod )","Melopsittacus undulatus ( Budgerigar )","Gallus  gallus ( Chicken )","Latimeria chalumnae ( Coelacanth )","Takifugu  rubripes ( Fugu )","Petromyzon  marinus ( Lamprey )","Anolis  carolinensis ( Lizard )","Oryzias  latipes   ( Medaka )","Geospiza fortis ( Medium ground finch )","Oreochromis niloticus ( Nile tilapia )","Chrysemys picta ( Painted turtle )","Gasterosteus aculeatus ( Stickleback )","Tetraodon nigroviridis  ( Tetraodon )","Meleagris gallopavo ( Turkey )","Xenopus tropicalis ( X. tropicalis )","Taeniopygia guttata ( Zebra finch )","Danio rerio ( Zebrafish )","Ciona intestinalis ( C. intestinalis )","Branchiostoma floridae ( Lancelet )","Strongylocentrotus purpuratus ( S. purpuratus )","Apis mellifera ( A. mellifera )","Anopheles gambiae ( A. gambiae )","Drosophila ananassae ( D. ananassae )","Duranta erecta ( D. erecta )","Drosophila grimshawi ( D. grimshawi )","Drosophila melanogaster ( D. melanogaster )","Drosophila mojavensis ( D. mojavensis )","Drosophila persimilis ( D. persimilis )","Drosophila pseudoobscura ( D. pseudoobscura )","Drosophila sechellia ( D. sechellia )","Drosophila simulans  ( D. simulans )","Drosophila virilis ( D. virilis )","Drosophila yakuba ( D. yakuba )","Caenorhabditis brenneri ( C. brenneri )","Caenorhabditis briggsae ( C. briggsae )","Caenorhabditis elegans ( C. elegans )","Caenorhabditis japonica ( C. japonica )","Caenorhabditis remanei ( C. remanei )","Pristionchus pacificus  ( P. pacificus )","Aplysia californica ( Sea Hare )","Saccharomyces cerevisiae ( Yeast )"],
+		      strict: true,
+					allowInvalid: false 
+				},
+				
+				{ type:'text'},					
+				{ type: 'text'}	
+				],
 				
 		    onChange:function(changes, source){
 		    	$("#id_{{ name }}").val(JSON.stringify(this.getData()))
@@ -122,12 +131,23 @@ CustomTextEditor.prototype.close = function () {
 		});  
 		
 		var rowCount = container.data('handsontable').rowCount
+		
+		
+		
+		
+
+		
+		
+		
+		
 	});	 
 	
 	
+
 	
 	
-})(jQuery); 
+})(jQuery)
+
 
 //
 //function escapetd(){

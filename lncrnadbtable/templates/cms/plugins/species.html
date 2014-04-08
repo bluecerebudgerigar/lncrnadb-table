@@ -1,3 +1,5 @@
+{% load sekizai_tags %}
+
 {% autoescape off %}
 
 <div id="{{instance.name}}" class="{{instance.plugin_type}}">
@@ -20,3 +22,62 @@
 		</table>
 	</div>
 </div>
+{% addtoblock "js" %}  
+
+
+<script type="text/javascript">
+
+var species_dictionary = { "Homo Sapiens ( Human )" : "hg38","Vicugna pacos ( Alpaca )" : "vicPac2","Dasypus novemcinctus ( Armadillo )" : "dasNov3","Otolemur garnettii ( Bushbaby )" : "otoGar3","Papio hamadryas ( Baboon )" : "papHam1","Papio anubis ( Baboon )" : "papAnu2","Felis catus ( Cat )" : "felCat5","Pan troglodytes ( Chimpanzee )" : "panTro4","Bos Taurus ( Cow )" : "bosTau7","Canis familiaris  ( Dog )" : "canFam3","Tursiops truncatus ( Dolphin )" : "turTru2","Loxodonta africana  ( Elephant )" : "loxAfr3","Mustela putorius furo ( Ferret )" : "musFur1","Nomascus leucogenys ( Gibbon )" : "nomLeu3","Gorilla  gorilla ( Gorilla )" : "gorGor3","Cavia  porcellus ( Guinea pig )" : "cavPor3","Erinaceus  europaeus ( Hedgehog )" : "eriEur1","Equus  caballus ( Horse )" : "equCab2","Dipodomys  ordii ( Kangaroo rat )" : "dipOrd1","Trichechus manatus latirostris ( Manatee )" : "triMan1","Callithrix  jacchus ( Marmoset )" : "calJac3","Pteropus vampyrus ( Megabat )" : "pteVam1","Myotis  lucifugus ( Microbat )" : "myoLuc2","Mus  musculus  ( Mouse )" : "mm10","Microcebus  murinus ( Mouse lemur )" : "micMur1","Heterocephalus glaber  ( Naked mole-rat )" : "hetGla2","Monodelphis  domestica ( Opossum )" : "monDom5","Pongo abelii ( Orangutan )" : "ponAbe2","Ailuropoda melanoleuca ( Panda )" : "ailMel1","Sus  scrofa ( Pig )" : "susScr3","Ochotona princeps ( Pika )" : "ochPri2","Ornithorhynchus  anatinus ( Platypus )" : "ornAna1","Oryctolagus  cuniculus ( Rabbit )" : "oryCun2","Rattus  norvegicus   ( Rat )" : "rn5","Macaca mulatta ( Rhesus )" : "rheMac3","Procavia  capensis ( Rock hyrax )" : "proCap1","Ovis aries ( Sheep )" : "oviAri3","Sorex  araneus ( Shrew )" : "sorAra1","Choloepus  hoffmanni   ( Sloth )" : "choHof1","Spermophilus tridecemlineatus ( Squirrel )" : "speTri2","Saimiri boliviensis ( Squirrel monkey )" : "saiBol1","Tarsius syrichta ( Tarsier )" : "tarSyr1","Sarcophilus harrisii ( Tasmanian devil )" : "sarHar1","Echinops  telfairi ( Tenrec )" : "echTel2","Tupaia belangeri ( Tree shrew )" : "tupBel1","Macropus  eugenii ( Wallaby )" : "macEug2","Ceratotherium simum simum ( White rhinoceros )" : "cerSim1","Alligator mississippiensis ( American alligator )" : "allMis1","Gadus morhua ( Atlantic cod )" : "gadMor1","Melopsittacus undulatus ( Budgerigar )" : "melUnd1","Gallus  gallus ( Chicken )" : "galGal4","Latimeria chalumnae ( Coelacanth )" : "latCha1","Takifugu  rubripes ( Fugu )" : "fr3","Petromyzon  marinus ( Lamprey )" : "petMar2","Anolis  carolinensis ( Lizard )" : "anoCar2","Oryzias  latipes   ( Medaka )" : "oryLat2","Geospiza fortis ( Medium ground finch )" : "geoFor1","Oreochromis niloticus ( Nile tilapia )" : "oreNil2","Chrysemys picta ( Painted turtle )" : "chrPic1","Gasterosteus aculeatus ( Stickleback )" : "gasAcu1","Tetraodon nigroviridis  ( Tetraodon )" : "tetNig2","Meleagris gallopavo ( Turkey )" : "melGal1","Xenopus tropicalis ( X. tropicalis )" : "xenTro3","Taeniopygia guttata ( Zebra finch )" : "taeGut1","Danio rerio ( Zebrafish )" : "danRer7","Ciona intestinalis ( C. intestinalis )" : "ci2","Branchiostoma floridae ( Lancelet )" : "braFlo1","Strongylocentrotus purpuratus ( S. purpuratus )" : "strPur2","Apis mellifera ( A. mellifera )" : "apiMel2","Anopheles gambiae ( A. gambiae )" : "anoGam1","Drosophila ananassae ( D. ananassae )" : "droAna2","Duranta erecta ( D. erecta )" : "droEre1","Drosophila grimshawi ( D. grimshawi )" : "droGri1","Drosophila melanogaster ( D. melanogaster )" : "dm3","Drosophila mojavensis ( D. mojavensis )" : "droMoj2","Drosophila persimilis ( D. persimilis )" : "droPer1","Drosophila pseudoobscura ( D. pseudoobscura )" : "dp3","Drosophila sechellia ( D. sechellia )" : "droSec1","Drosophila simulans  ( D. simulans )" : "droSim1","Drosophila virilis ( D. virilis )" : "droVir2","Drosophila yakuba ( D. yakuba )" : "droYak2","Caenorhabditis brenneri ( C. brenneri )" : "caePb2","Caenorhabditis briggsae ( C. briggsae )" : "cb3","Caenorhabditis elegans ( C. elegans )" : "ce10","Caenorhabditis japonica ( C. japonica )" : "caeJap1","Caenorhabditis remanei ( C. remanei )" : "caeRem3","Pristionchus pacificus  ( P. pacificus )" : "priPac1","Aplysia californica ( Sea Hare )" : "aplCal1","Saccharomyces cerevisiae ( Yeast )" : "sacCer3" }
+
+
+$(document).ready( function() {
+	
+
+	
+	
+	
+	var species_column;
+	var link_column;
+	var ucsc = "http://genome.ucsc.edu/cgi-bin/hgTracks?db="
+	
+	$(".SpeciesPlugin").find('th').each(function(index, val){
+		if ( /Genome Browser/i.test($(val).html())){
+			link_column = index;
+		}
+		if ( /Species/i.test($(val).html())){
+			species_column = index;
+		}	
+	})
+	
+		
+	$(".SpeciesPlugin").find('tr').each(function(index, val){
+		var target = $(val.children).eq(link_column)
+		if (target.find("a").length) {
+			return;
+		}
+		else if (target.is('td')) {
+			
+				var species = $(val.children).eq(species_column)
+				var code = species.text()
+				species_code = species_dictionary[code] 
+				var position = target.text()
+				var url_link = ucsc + species_code + "&position=" + escape(position)
+				console.log(url_link)
+				target.html("<a href=" + url_link + ">" + species_code + " " + position + "</a>")
+				
+
+			}
+			
+			
+			
+		}
+	)
+	
+	
+alert(species_dictionary["Vicugna pacos( Alpaca )"])
+})
+</script>
+	
+	
+{% endaddtoblock %}  
+	
