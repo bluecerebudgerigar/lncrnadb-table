@@ -187,7 +187,7 @@ class sequence_converter(object):
             search_term  = accession_uid_map[uid]
             entry_no = reverse_dict[search_term] 
             
-            sequence_name = "%s_%s_%s" % (self.seq_name, details[1], entry_no + 1)
+            sequence_name = "%s_%s_%s" % (self.seq_name, details[-2], entry_no + 1)
             sequence_name = sequence_name.lower()
             sequence_name = re.sub("\s","",sequence_name)
             details.insert(0, sequence_name)
@@ -203,7 +203,7 @@ class sequence_converter(object):
         entry_list = sorted(entry_list)
         for entry_no in entry_list:
              details = self.original_dict[entry_no]
-             sequence_name = "%s_%s_%s" % (self.seq_name, details[1], entry_no + 1)
+             sequence_name = "%s_%s_%s" % (self.seq_name, details[-2], entry_no + 1)
              details[0] = sequence_name
              self.return_array.append(details)
     
