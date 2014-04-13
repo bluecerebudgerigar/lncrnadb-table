@@ -227,7 +227,7 @@ class sequence_converter(object):
     def build_return_array(self):
         entry_list = self.original_dict.keys()
         entry_list = sorted(entry_list)
-        for entry_no in entry_list
+        for entry_no in entry_list:
              details = self.original_dict[entry_no]
              sequence_name = "%s_%s_%s" % (self.seq_name, details[1], entry_no + 1)
              details[0] = sequence_name
