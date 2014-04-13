@@ -1,3 +1,4 @@
+{% load sekizai_tags %}
 {% autoescape off %}
 
 <div id='{{ instance.name.split|join:"_"}}' class="{{instance.plugin_type}}">
@@ -20,3 +21,50 @@
 		</table>
 	</div>
 </div>
+
+{% addtoblock "js" %}  
+
+
+<script type="text/javascript">
+
+
+$(document).ready( function() {
+	
+
+	
+	alert("associated in place")
+	var pubmed_url = "http://www.ncbi.nlm.nih.gov/pubmed/"
+	var pub_med
+	var ucsc = "http://genome.ucsc.edu/cgi-bin/hgTracks?db="
+	
+	$("table #Associatedcomp").find('th').each(function(index, val){
+		if ( /Pub/i.test($(val).html())){
+			pub_med = index;
+
+		}
+	})
+	
+		
+	$("table #Associatedcomp").find('tr').each(function(index, val){
+		var target = $(val.children).eq(pub_med)
+		if (target.find("a").length) {
+			
+			return;
+		}
+		else {
+			pubmed_id = target.text()
+			target.html("<a href=" + pubmed_url + pubmed_id + ">" + pubmed_id + "</a>")
+		
+			}
+			
+			
+			
+		}
+	)
+	
+	
+})
+</script>
+
+
+{% endaddtoblock %}  
