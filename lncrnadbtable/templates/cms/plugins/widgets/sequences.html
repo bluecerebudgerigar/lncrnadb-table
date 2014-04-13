@@ -1,5 +1,4 @@
 
-
 <div id="table"></div>
 <script type="text/javascript">
 //<![CDATA]
@@ -59,15 +58,14 @@ var lol;
 			data:[["Sequence Name","INSCDS Accession IDs","Comments","Species","Fasta_sequence"],["","","","",""]],
 			{% endif %}
 			
-		    startRows: 2,
+		startRows: 2,
 	    	startCols: 5,
 	        rowHeaders: true,
 	    	colHeaders: true,
-		    contextMenu:true,
-			minSpareRows: 1,
-		    onChange:function(changes, source){
+		contextMenu:true,
+		onChange:function(changes, source){
 		    	$("#id_{{ name }}").val(JSON.stringify(this.getData()))
-		    },
+		    }
 		    cells: function (row, col, prop) {
 		    	if(row < Number(top)){
 		    		this.renderer= headerRenderer;
