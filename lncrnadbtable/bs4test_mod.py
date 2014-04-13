@@ -100,7 +100,7 @@ class sequence_converter(object):
         
         
     def find_unmatched_queries(self):
-        unmatch = dict([ (x,y) for x,y in self.data_dict.iteritems() if re.match("<[^>]*>", y ) is None if "," not in y])
+        unmatch = dict([ (x,y) for x,y in self.data_dict.iteritems() if re.match("<[^>]*>", y ) is None if "," not in y if "." not in y])
         self.unmatch =  unmatch
         
         
