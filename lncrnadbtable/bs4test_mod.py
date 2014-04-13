@@ -89,7 +89,6 @@ class sequence_converter(object):
         self.accession_uid_map = {}
         self.return_array = [self.header]
     
-    
         
     def convert_data_to_dict(self):
         
@@ -228,8 +227,11 @@ class sequence_converter(object):
     def build_return_array(self):
         entry_list = self.original_dict.keys()
         entry_list = sorted(entry_list)
-        for entry_no in entry_list:
-             self.return_array.append(self.original_dict[entry_no])
+        for entry_no in entry_list
+             details = self.original_dict[entry_no]
+             sequence_name = "%s_%s_%s" % (self.seq_name, details[1], entry_no + 1)
+             details[0] = sequence_name
+             self.return_array.append(details)
     
   #  
   #  def fix_sequence_name(self):
@@ -252,7 +254,6 @@ def convert_function_sequence(json_data, pagename):
     seq_convertor.unmatched_as_list()
         
     esearch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucleotide&term="
-    esearch_url = "%s%s" % (esearch_header, seq_convertor.unmatch_list)
     
     try :
         seq_convertor.read_get_beauty(esearch_url)
