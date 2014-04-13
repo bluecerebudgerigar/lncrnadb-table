@@ -54,7 +54,7 @@ class Nomenclature(CMSPlugin):
     Table plugin
     """
 
-    name = models.CharField(_("name"), max_length=256)
+    name = models.CharField(_("name"), max_length=256, default="Name")
 
     headers_top = models.PositiveSmallIntegerField(_("top"), default=1)
     headers_left = models.PositiveSmallIntegerField(_("left"), default=0)
