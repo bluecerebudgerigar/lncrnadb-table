@@ -7,32 +7,6 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 import re
 import json, simplejson
-#from HTMLParser import HTMLParser
-
-
-##
-##class URLFINDER:
-##    ### convert list of pudmed id into 1. authour and year
-##    ### and urls ###
-##    def __init__(self):
-##        self.aut_year = {}
-##        self.urls = {}
-##    
-
-
-#
-#class MLStripper(HTMLParser):                                               
-#    def __init__(self):                                                     #Snippets from the web, should really write my own
-#        self.reset()                                                        #
-#        self.fed = []                                                       #
-#    def handle_data(self, d):                                               #
-#        self.fed.append(d)                                                  #
-#    def get_data(self):                                                     #
-#        return ''.join(self.fed)                                            #
-#                                                                            #
-#def strip_tags(html):                                                       #
-#    s = MLStripper()                                                        #
-#    s.feed(html)                                                            #
 
 def convert_ref(text):
     aut_year = {}
@@ -254,6 +228,7 @@ def convert_function_sequence(json_data, pagename):
     seq_convertor.unmatched_as_list()
         
     esearch_header = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucleotide&term="
+    esearch_url = "%s%s" % (esearch_header, seq_convertor.unmatch_list)
     
     try :
         seq_convertor.read_get_beauty(esearch_url)
