@@ -59,6 +59,7 @@ class SequencesTableWidget(Textarea):
                 'js/jquery.ui.position.js',
                 'js/json2.js',
                 'js/bootstrap-typeahead.js',
+                'js/sequence_ajax.js'
             )]
         css = {
             'all': [static_url(path) for path in (
