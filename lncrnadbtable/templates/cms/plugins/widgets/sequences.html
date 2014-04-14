@@ -100,17 +100,11 @@ var lol;
 //]]>
 </script>
 <script>
-    $(function(){
-        function bindDumpButton() {
-            $("button[name=dump]").onclick( function () {
-               console.log(data)
-            });
-        }
-        bindDumpButton();
+    $(document).ready(function (){
+        $('button[name="dump"]').click(function(){console.log(data)})
+    }
 
 
-
-    })
 </script>
 <style type="text/css">
 	#id_{{ name }} { display:none}
